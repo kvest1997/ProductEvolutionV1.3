@@ -24,5 +24,15 @@ namespace ProductEvolutionV1._3
         {
             InitializeComponent();
         }
+
+        private void ShowButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
