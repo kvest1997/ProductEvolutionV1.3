@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ProductEvolutionV1._3.Core;
+using ProductEvolutionV1._3.Core.Site;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,19 +22,43 @@ namespace ProductEvolutionV1._3
     /// </summary>
     public partial class MainWindow : Window
     {
+        ParserWorker<string[]> parserWorker;
         public MainWindow()
         {
             InitializeComponent();
+
+            parserWorker = new ParserWorker<string[]>(new SiteParser());
+            parserWorker.OnCompleted += ParserWorker_OnCompleted;
+            parserWorker.OnNewData += ParserWorker_OnNewData;
+        }
+
+        private void ParserWorker_OnNewData(object arg1, string[] arg2)
+        {
+            for (int i = 0; i < arg2.Length; i++)
+            {
+                ListBoxResult.Items.Add(arg2[i]);
+            }
+        }
+
+        private void ParserWorker_OnCompleted(object obj)
+        {
+            MessageBox.Show("All works done!");
         }
 
         private void ShowButton_Click(object sender, RoutedEventArgs e)
         {
-
+            parserWorker.ParserSettings = new SiteSettings(EnterTextBox.Text);
+            parserWorker.Start();
         }
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void ProfilMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
