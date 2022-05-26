@@ -12,21 +12,28 @@ namespace ProductEvolutionV1._3.Core.Site
     {
         public string[] Parse(HtmlDocument htmlDocument)
         {
-            var list = new List<string>();
-            ArrayList listPrise = new ArrayList();
-            ArrayList listName = new ArrayList();
-
+            var title = new List<string>();
+            var price = new List<string>();
+            //Название
             foreach (HtmlNode node in htmlDocument.DocumentNode.SelectNodes("//div[contains(@class, 'iva-item-body-KLUuy')]//a[@title]"))
             {
-                list.Add(node.InnerText);
+                title.Add(node.InnerText);
             }
-
-            foreach (HtmlNode node in htmlDocument.DocumentNode.SelectNodes("//div[contains(@class, 'iva-item-body-KLUuy')]//meta[contains(@itemprop, 'price')]"))
+            //цена
+            foreach (HtmlNode node in htmlDocument.DocumentNode.SelectNodes("//div[contains(@class, 'iva-item-body-KLUuy')]//span[contains(@class, 'price-text-_YGDY text-text-LurtD text-size-s-BxGpL')]"))
             {
-                listPrise.Add(node.InnerText);
+                price.Add(node.InnerText);
             }
 
-            return list.ToArray();
+            var result = new List<string>();
+
+
+            for (int i = 0; i < title.Count; i++)
+            {
+                result.Add($"{title[i]} - {price[i]}");
+            }
+
+            return result.ToArray();
         }
     }
 }

@@ -62,12 +62,10 @@
                          Text="" 
                          VerticalAlignment="Center" 
                          Width="120"/>
-                <TextBox x:Name="PasswordTextBox" 
+                <PasswordBox x:Name="PasswordTextBox" 
                          HorizontalAlignment="Center" 
                          Grid.Row="2" 
                          Grid.Column="1" 
-                         TextWrapping="Wrap" 
-                         Text="" 
                          VerticalAlignment="Center" 
                          Width="120"/>
                 <Button x:Name="EnterButton" 
@@ -75,7 +73,9 @@
                         VerticalAlignment="Center" 
                         Grid.Column="1" Grid.Row="3" 
                         Width="55" Height="20" 
-                        Content="Войти"/>
+                        Content="Войти"
+                        Click="EnterButton_Click"
+                        />
 
             </Grid>
         </Border>

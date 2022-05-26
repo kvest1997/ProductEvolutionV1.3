@@ -23,13 +23,26 @@ namespace ProductEvolutionV1._3
     public partial class MainWindow : Window
     {
         ParserWorker<string[]> parserWorker;
-        public MainWindow()
+        ProfilWindow profilWindow;
+        Model1Container dbContext;
+        public MainWindow(int currentId)
         {
             InitializeComponent();
 
             parserWorker = new ParserWorker<string[]>(new SiteParser());
             parserWorker.OnCompleted += ParserWorker_OnCompleted;
             parserWorker.OnNewData += ParserWorker_OnNewData;
+            profilWindow = new ProfilWindow(currentId);
+
+            using (dbContext = new Model1Container())
+            {
+                for (int i = 1; i <= 8; i++)
+                {
+                    var nameCategory = dbContext.CategorySet.FirstOrDefault(x => x.CategoryId == i);
+                    if(nameCategory != null)
+                        TypeItemComboBox.Items.Add(nameCategory.Name);
+                }
+            }
         }
 
         private void ParserWorker_OnNewData(object arg1, string[] arg2)
@@ -58,6 +71,27 @@ namespace ProductEvolutionV1._3
 
         private void ProfilMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            profilWindow.Show();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void Calc()
+        {
+            int resultSum = 0;
+            int Rate = 0;
+            switch (RateCombo.Text)
+            {
+                case "А - отличное": Rate = 0; break;
+                case "B - хорошее": Rate = 10; break;
+                case "С - среднее": Rate = 20; break;
+                case "D - удовлетворительное": Rate = 30; break;
+                case "C - плохое": Rate = 40; break;
+            }
+
 
         }
     }

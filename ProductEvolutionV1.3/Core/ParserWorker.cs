@@ -82,6 +82,8 @@ namespace ProductEvolutionV1._3.Core
             var source = loader.GetSourceByItem();
             var result = parser.Parse(source);
 
+            
+
             OnNewData?.Invoke(this, result);
             OnCompleted?.Invoke(this);
             isActive = false;
